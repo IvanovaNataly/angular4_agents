@@ -51,6 +51,7 @@ export class AppComponent {
     }
   ];
   countries = {};
+  agents = [];
 
   constructor() {
     console.log(this.countries);
@@ -58,15 +59,24 @@ export class AppComponent {
 
   countAgents() {
     for (let everyAgent in this.jsonFile) {
-        const countryName = this.jsonFile[everyAgent].country;
+      const countryName = this.jsonFile[everyAgent].country;
+      const agent = this.jsonFile[everyAgent].agent;
+      if(this.agents.indexOf(agent) === -1) {
+        console.log(this.agents);
+        debugger;
         if (this.countries.hasOwnProperty(countryName)) {
-            this.countries[countryName].numbIsolated();
+          this.countries[countryName].numbIsolated();
         } else {
-          const newTeam = new CountryModel(countryName);
-          this.countries[countryName] = newTeam;
+          const newCountry = new CountryModel(countryName);
+          this.countries[countryName] = newCountry;
         }
-        }
-      console.log(this.countries);
+      }
+      else {
+        this.agents.push(agent);
+      }
+
+    }
+    console.log(this.countries);
   }
 
   ngOnInit() {
